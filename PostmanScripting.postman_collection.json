@@ -1,0 +1,122 @@
+{
+	"info": {
+		"_postman_id": "d14bf591-5305-4b35-af4b-c743bc8a4744",
+		"name": "PostmanScripting",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "GetRequest_PathParameter_finddata_ID",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "be6005a6-4213-4cb9-9857-d38a31035453",
+						"exec": [
+							"console.log(\"This is Request Level Test script...\");\r",
+							"\r",
+							"//code to validate status code\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"//JAVASCRIPT\r",
+							"var response = JSON.parse(responseBody);\r",
+							"tests[\"id\"] = response.data.id == 3;\r",
+							"\r",
+							"\r",
+							"//CHAIBDD\r",
+							"pm.test(\"Validating multiple assertions\", function () {\r",
+							"    responseJson=pm.response.json();\r",
+							"    pm.expect(responseJson.data.id).to.eql(3);\r",
+							"    pm.expect(responseJson.data.email).to.eql(\"emma.wong@reqres.in\");\r",
+							"    pm.expect(responseJson.data.first_name).to.eql(\"Emma\");\r",
+							"    pm.expect(responseJson.data.last_name).to.eql(\"Wong\");\r",
+							"});\r",
+							"\r",
+							"//Handling response that is not correctly parsed in JSON\r",
+							"pm.test(\"Body contains string\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"emma.wong@reqres.in\")\r",
+							"    \r",
+							"});\r",
+							"\r",
+							"//code to validate status code\r",
+							"pm.test(\"Successfull status code\", function () {\r",
+							"    pm.expect(pm.response.code).to.be.oneOf([200,201])\r",
+							"});\r",
+							"\r",
+							"\r",
+							"//Testing Headers\r",
+							"pm.test(\"Content type Presence1\", function () {\r",
+							"    pm.response.to.have.header(\"Content-Type\");\r",
+							"});\r",
+							"\r",
+							"//Testing Headers\r",
+							"pm.test(\"Content type Presence2\", function () {\r",
+							"    pm.expect(pm.response.headers).to.have(\"Content-Type\");\r",
+							"});\r",
+							"\r",
+							"\r",
+							"//Validating Header Content type value\r",
+							"pm.test(\"Content type Value\", function () {\r",
+							"pm.expect(pm.response.headers.get(\"Content-Type\")).to.eql(\"application/json; charset=utf-8\")\r",
+							"});\r",
+							"\r",
+							"//Testing Cookies\r",
+							"pm.test(\"Cookies\", function () {\r",
+							"pm.expect(pm.cookies.has(\"__cfduid\")).to.be.true\r",
+							"});\r",
+							"\r",
+							"\r",
+							"//Testing Cookies Value\r",
+							"pm.test(\"Cookies Value\", function () {\r",
+							"pm.expect(pm.cookies.get(\"__cfduid\")).to.be.eql(\"d446f16b95c30b94230f4ace272eba9c11599504212\");\r",
+							"});\r",
+							"\r",
+							"//Response time should be less than 100ms\r",
+							"pm.test(\"Response time is less than 100ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(100);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "7e2c60b5-cb36-42ed-83cd-990282752821",
+						"exec": [
+							"console.log(\"This is Request Level Pre-request script...\");\r",
+							"pm.globals.set(\"userid\", \"3\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://reqres.in/api/users/{{userid}}",
+					"protocol": "https",
+					"host": [
+						"reqres",
+						"in"
+					],
+					"path": [
+						"api",
+						"users",
+						"{{userid}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
